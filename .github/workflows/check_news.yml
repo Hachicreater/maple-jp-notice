@@ -1,0 +1,42 @@
+name: MapleStory Notice Monitor
+
+on:
+  schedule:
+    - cron: '*/10 * * * *' # 10分ごとに実行
+  workflow_dispatch:      # 手動実行用ボタンを表示
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    
+    # リポジトリに last_id.txt を保存するために書き込み権限を許可
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests playwright
+          # ブラウザ本体（Chromium）と実行に必要なシステム依存関係をインストール
+          playwright install chromium --with-deps
+
+      - name: Execute Scraper
+        env:
+          DISCORD_WEBHOOK_JSON: ${{ secrets.DISCORD_WEBHOOK_JSON }}
+        run: python maple_notice.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add last_id.txt
+          # 変更がある場合のみコミット
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update last_id [skip ci]" && git push)
