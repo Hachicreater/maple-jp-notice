@@ -1,5 +1,5 @@
 <h2 align="center">
-  🍁 MapleStory Notice Monitor
+  🍁 MapleStory Notice Monitor 🍁
 </h2>
 メイプルストーリー公式サイトの「お知らせ」を24時間監視し、更新があればDiscordへ即座に通知するシステムです。 </p>
 JavaScriptで動的に生成される公式サイトの構造を突破するため、Playwright (ヘッドレスブラウザ) を採用しています。</p>
@@ -34,13 +34,19 @@ JavaScriptで動的に生成される公式サイトの構造を突破するた�
   </ol>
 <h2>📂 ファイル構成</h2>
 <ul>
-  <li><code>maple_notice.py</code>: 監視プログラム本体。Playwright を使用してページを解析します。</li>
-  <li><code>.github/workflows/check_news.yml</code>: 自動実行スケジュール設定。10分おきに自動巡回します。</li>
-  <li><code>last_id.txt</code>: 通知済み記事の ID 履歴（最大50件保持）。</li>
+  <li><code>maple_notice.py</code>:<br>
+    監視プログラム本体。Playwright を使用してページを解析します。</li>
+  <li><code>.github/workflows/check_news.yml</code>:<br>
+    自動実行スケジュール設定。10分おきに自動巡回します。</li>
+  <li><code>last_id.txt</code>:<br>
+    通知済み記事の ID 履歴（最大50件保持）。</li>
 </ul>
 <h2>⚠️ 運用上の注意</h2>
 <ul>
-  <li><b>初回実行時</b>: 履歴がない状態で実行すると、現在の最新 20 件を履歴として登録（初期化）し、通知は行いません。</li>
-  <li><b>通知テスト</b>: <code>last_id.txt</code> の内容を消去して <b>[Actions]</b> タブから <b>「Run workflow」</b> を手動実行すると、最新記事が新着として通知されます。</li>
-  <li><b>エラー対応</b>: ログに「Webhook設定が読み込めません」と出る場合は、<code>Variables</code> の入力形式が <code>["URL"]</code> になっているか確認してください。</li>
+  <li><b>初回実行時</b>:<br>
+    履歴がない状態で実行すると、現在の最新 20 件を履歴として登録（初期化）し、通知は行いません。</li>
+  <li><b>通知テスト</b>:<br>
+    <code>last_id.txt</code> の内容を消去して <b>[Actions]</b> タブから <b>「Run workflow」</b> を手動実行すると、最新記事が新着として通知されます。</li>
+  <li><b>エラー対応</b>:<br>
+    ログに「Webhook設定が読み込めません」と出る場合は、<code>Variables</code> の入力形式が <code>["URL"]</code> になっているか確認してください。</li>
 </ul>
